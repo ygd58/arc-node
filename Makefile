@@ -137,7 +137,7 @@ test-it: up ## Run integration tests
 	cargo nextest run $(UNIT_TEST_ARGS) --features integration
 
 .PHONY: test-all
-test-all: test-it test-unit-contract ## Run all tests
+test-all: test-it test-unit-contract test-arcup ## Run all tests
 	@echo running all tests...
 	make smoke LAUNCH_ARGS="--frozen --healthy-retry=130"
 
@@ -158,6 +158,11 @@ cov-report: cov-unit ## Generate the coverage report
 .PHONY: cov-show
 cov-show: cov-report ## Generate coverage report and open in browser
 	open target/llvm-cov/html/index.html
+
+.PHONY: test-arcup
+test-arcup: ## Run the arcup installer shell test suite
+	@echo running arcup shell tests...
+	bash arcup/test_arcup.sh
 
 .PHONY: test-unit-contract
 test-unit-contract: check-foundry ## Run contract unit tests with coverage
